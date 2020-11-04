@@ -16,9 +16,9 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('name', 55)->nullable(false);
-            $table->string('description', 255)->default(null);
             $table->float('price')->nullable(false);
             $table->boolean('is_published')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -14,16 +14,16 @@ class CreateItemToCategoryTable extends Migration
     public function up()
     {
         Schema::enableForeignKeyConstraints();
-        Schema::create('item_to_category', function (Blueprint $table) {
+        Schema::create('category_item', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_item')->unsigned()->nullable(false);
-            $table->bigInteger('id_category')->unsigned()->nullable(false);
-            $table->index(['id_item', 'id_category']);
+            $table->bigInteger('item_id')->unsigned()->nullable(false);
+            $table->bigInteger('category_id')->unsigned()->nullable(false);
             $table->timestamps();
         });
-        Schema::table('item_to_category', function(Blueprint $table) {
-            $table->foreign('id_item')->references('id')->on('items')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreign('id_category')->references('id')->on('categories')->cascadeOnDelete()->cascadeOnUpdate();
+        Schema::table('category_item', function(Blueprint $table) {
+            $table->foreign('item_id')->references('id')->on('items')->cascadeOnUpdate();
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnUpdate();
+            $table->index(['item_id', 'category_id']);
         });
     }
 
@@ -34,7 +34,7 @@ class CreateItemToCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_to_category');
+        Schema::dropIfExists('category_item');
 
     }
 }
